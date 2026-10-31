@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080604">
+<title>Choose Your Login Region</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#080604;font-family:Arial,sans-serif}
+body{min-height:100svh;display:grid;place-items:center;overflow:hidden}
+.stage{position:relative;width:min(100vw,150svh);aspect-ratio:3/2;max-height:100svh}
+.art{display:block;width:100%;height:100%;object-fit:contain}
+.hit{position:absolute;display:block;border:0;background:transparent;cursor:pointer;border-radius:12px}
+.hit:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.malaysia{left:22.5%;top:47%;width:28%;height:28%}
+.singapore{left:51.5%;top:47%;width:28%;height:28%}
+.close{left:74%;top:17%;width:6.5%;height:10%;border-radius:50%}
+.dismiss{position:fixed;inset:0;z-index:5;background:rgba(0,0,0,.94);color:#f3d58b;display:none;place-items:center;text-align:center;padding:24px}
+.dismiss.show{display:grid}
+.reopen{margin-top:14px;border:1px solid #d9b66b;border-radius:9px;background:#17110a;color:#f3d58b;padding:12px 20px;font-weight:bold}
+@media (max-aspect-ratio: 3/2){
+  .stage{width:100vw;max-height:none;height:auto}
+}
+</style>
+</head>
+<body>
+<main class="stage" id="stage" aria-label="Choose your login region">
+  <img class="art" src="casino-region-popup.png" alt="Casino-themed region selection: Malaysia Login or Singapore Login">
+  <a class="hit malaysia" href="https://tinyurl.com/tpowernew" aria-label="Malaysia Login"></a>
+  <a class="hit singapore" href="https://tinyurl.com/tpowersg" aria-label="Singapore Login"></a>
+  <button class="hit close" id="close" type="button" aria-label="Close region selection"></button>
+</main>
+<div class="dismiss" id="dismiss">
+  <div>
+    <div>REGION SELECTION CLOSED</div>
+    <button class="reopen" id="reopen" type="button">OPEN LOGIN OPTIONS</button>
+  </div>
+</div>
+<script>
+const dismiss=document.getElementById('dismiss');
+document.getElementById('close').addEventListener('click',()=>dismiss.classList.add('show'));
+document.getElementById('reopen').addEventListener('click',()=>dismiss.classList.remove('show'));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')dismiss.classList.add('show')});
+document.addEventListener('click',e=>{
+  if(dismiss.classList.contains('show') && e.target===dismiss) dismiss.classList.remove('show');
+});
+</script>
+</body>
+</html>
