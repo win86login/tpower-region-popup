@@ -11,7 +11,15 @@ html,body{margin:0;width:100%;height:100%;background:#050505;overflow:hidden}
 body{display:grid;place-items:center;font-family:Arial,"Noto Sans SC",sans-serif}
 .poster{position:relative;width:min(100vw,75.17dvh);aspect-ratio:1087/1446;max-height:100dvh;max-width:100vw;overflow:hidden;background:#05070d}
 .art{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;display:block}
-/* The city skyline remains visible; the old printed title, cards and player are covered by fresh UI. */
+/* Clean background with live page headings, cards and player. */
+
+.header{position:absolute;z-index:5;left:4%;top:17%;width:92%;display:flex;flex-direction:column;align-items:center;text-align:center;pointer-events:none}
+.header h1{margin:0;font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:700;
+ font-size:clamp(25px,6.2vw,48px);line-height:1.12;letter-spacing:.015em;color:#ffe6a0;
+ text-shadow:0 2px 0 #8b5a16,0 0 12px #e7b94f99,0 3px 6px #000}
+.header p{margin:3.2% 0 0;font-family:'Noto Sans SC',Arial,sans-serif;font-size:clamp(15px,3.5vw,25px);
+ letter-spacing:.12em;color:#fff3d5;text-shadow:0 2px 5px #000,0 0 10px #000}
+
 .region-area{position:absolute;z-index:6;left:2%;top:45.8%;width:96%;height:36.5%;display:grid;grid-template-columns:1fr 1fr;gap:2.5%;align-items:stretch}
 .region-card{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4%;padding:7% 4%;border:1.5px solid #d9ad51;border-radius:18px;background:linear-gradient(155deg,rgba(26,22,17,.99),rgba(3,6,13,.99) 58%,rgba(24,17,8,.99));box-shadow:0 0 12px #e6b64f66,inset 0 0 18px #c18a2d33;text-decoration:none;color:#fff}
 .flag{font-size:clamp(40px,11vw,78px);line-height:1.1;filter:drop-shadow(0 4px 5px #000)}
@@ -36,6 +44,7 @@ body{display:grid;place-items:center;font-family:Arial,"Noto Sans SC",sans-serif
 <body>
 <main class="poster" aria-label="TPOWER region selection">
 <img class="art" src="region-background.png" alt="Kuala Lumpur and Singapore night skyline">
+<header class="header"><h1>SELECT YOUR REGION</h1><p>请选择你的登录地区</p></header>
 <section class="region-area" aria-label="选择登录地区">
  <a class="region-card" href="https://tinyurl.com/tpowernew" aria-label="Malaysia Login">
   <span class="flag" aria-hidden="true">🇲🇾</span>
