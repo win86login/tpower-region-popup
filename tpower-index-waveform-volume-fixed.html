@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050505">
+<title>TPOWER · Select Your Region</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:#050505;overflow:hidden}
+body{display:grid;place-items:center}
+.poster{position:relative;width:min(100vw,75.17dvh);aspect-ratio:1087/1446;max-height:100dvh;max-width:100vw;background:#050505;overflow:hidden}
+.art{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:fill;user-select:none;-webkit-user-drag:none}
+.hotspot{position:absolute;display:block;border:0;padding:0;margin:0;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent;z-index:2}
+.hotspot:focus-visible{outline:2px solid #fff2b3;outline-offset:2px;border-radius:12px}
+.my{left:8.8%;top:68.1%;width:35.3%;height:6.5%}
+.sg{left:54.5%;top:68.1%;width:36%;height:6.5%}
+/* Interactive layer sits directly over the printed music controls. */
+.player{position:absolute;left:8.2%;top:86.5%;width:83.6%;height:8.4%;z-index:4;pointer-events:none}
+.player:before{content:'';position:absolute;left:10%;top:12%;width:35%;height:76%;background:radial-gradient(ellipse at center,#090705 0%,#080604 72%,rgba(8,6,4,0) 100%);z-index:1;pointer-events:none}
+.play{pointer-events:auto;position:absolute;left:47.2%;top:22%;width:11.4%;height:58%;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 28%,#38240a,#080604 70%);border:2px solid #e9b94e;box-shadow:0 0 10px #e9b94e99,inset 0 0 7px #f6d77c55;color:#ffe6a1;font:bold clamp(15px,3.4vw,27px)/1 Arial,sans-serif}
+.play:active{transform:scale(.94)}
+.play .pause-icon{letter-spacing:2px;font-size:clamp(16px,3.5vw,28px)}
+.play .play-icon{font-size:clamp(15px,3vw,24px);margin-left:3px}
+.wave{position:absolute;left:10%;top:27%;width:29%;height:48%;display:flex;align-items:center;justify-content:center;gap:1.8%;pointer-events:none;z-index:5}
+.wave i{display:block;width:2.6%;height:34%;border-radius:5px;background:linear-gradient(#fff8c8,#ffc43d 55%,#d88912);box-shadow:0 0 7px #ffcf45,0 0 13px #ffb21c88;transform:scaleY(.18);transform-origin:center;opacity:.95}
+.wave.playing i{animation:pulse .48s ease-in-out infinite alternate}
+.wave.playing i:nth-child(2n){animation-delay:.13s}.wave.playing i:nth-child(3n){animation-delay:.27s}.wave.playing i:nth-child(4n){animation-delay:.39s}.wave.playing i:nth-child(5n){animation-delay:.51s}
+@keyframes pulse{0%{transform:scaleY(.18);opacity:.55}50%{transform:scaleY(2.15);opacity:1}100%{transform:scaleY(.42);opacity:.78}}
+.volume{pointer-events:auto;position:absolute;left:72%;top:34%;width:22%;height:32%;margin:0;opacity:1;cursor:pointer;touch-action:pan-x;z-index:7;-webkit-appearance:none;appearance:none;background:transparent;outline:none}
+.volume::-webkit-slider-runnable-track{height:4px;background:transparent;border:0}
+.volume::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:17px;height:17px;margin-top:-6.5px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff4bf,#ffc43d 62%,#b87512);border:1px solid #fff0ad;box-shadow:0 0 7px #ffc43d,0 0 13px #ffb21c88}
+.volume::-moz-range-track{height:4px;background:transparent;border:0}
+.volume::-moz-range-thumb{width:17px;height:17px;border-radius:50%;background:#ffc43d;border:1px solid #fff0ad;box-shadow:0 0 7px #ffc43d}
+.status{position:absolute;left:50%;top:102%;transform:translateX(-50%);color:#f8d77d;font:12px Arial,sans-serif;text-shadow:0 1px 4px #000;white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none}
+.status.show{opacity:1}
+@media (max-height:520px){.poster{width:auto;height:100dvh;max-width:100vw}}
+</style>
+</head>
+<body>
+<main class="poster" aria-label="TPOWER region selection">
+<img class="art" src="region-background.png" alt="Select your region：Malaysia 与 Singapore 登录地区选择界面">
+<a class="hotspot my" href="https://tinyurl.com/tpowernew" aria-label="Malaysia Login"></a>
+<a class="hotspot sg" href="https://tinyurl.com/tpowersg" aria-label="Singapore Login"></a>
+<div class="player" aria-label="音乐控制器">
+ <div class="wave" id="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+ <button class="play" id="play" type="button" aria-label="播放音乐"><span class="play-icon" id="playIcon">▶</span></button>
+ <input class="volume" id="volume" type="range" min="0" max="1" step="0.01" value="0.75" aria-label="调整音乐音量">
+ <div class="status" id="status" role="status">请点击中间按钮播放音乐</div>
+</div>
+<audio id="audio" src="TPOWER.mp3" preload="auto" loop playsinline></audio>
+</main>
+<script>
+const audio=document.getElementById('audio');
+const play=document.getElementById('play');
+const playIcon=document.getElementById('playIcon');
+const volume=document.getElementById('volume');
+const wave=document.getElementById('wave');
+const status=document.getElementById('status');
+audio.volume=Number(volume.value);
+function sync(){const on=!audio.paused;playIcon.textContent=on?'Ⅱ':'▶';playIcon.className=on?'pause-icon':'play-icon';play.setAttribute('aria-label',on?'暂停音乐':'播放音乐');wave.classList.toggle('playing',on)}
+play.addEventListener('click',async()=>{if(audio.paused){try{await audio.play();status.classList.remove('show')}catch(e){status.textContent='播放失败，请检查音乐文件后再试';status.classList.add('show')}}else{audio.pause()}sync()});
+volume.addEventListener('input',()=>{audio.volume=Number(volume.value)});
+audio.addEventListener('play',sync);audio.addEventListener('playing',sync);audio.addEventListener('pause',sync);audio.addEventListener('ended',sync);audio.addEventListener('waiting',()=>wave.classList.remove('playing'));
+window.addEventListener('load',async()=>{try{await audio.play();status.classList.remove('show')}catch(e){status.classList.add('show')}sync()});
+</script>
+</body>
+</html>
