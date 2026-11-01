@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050505">
+<title>TPOWER · Select Your Region</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:#050505;overflow:hidden}
+body{display:grid;place-items:center}
+.poster{position:relative;width:min(100vw,75.17dvh);aspect-ratio:1087/1446;max-height:100dvh;max-width:100vw;background:#050505;overflow:hidden}
+.art{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:fill;user-select:none;-webkit-user-drag:none}
+.hotspot{position:absolute;display:block;border:0;padding:0;margin:0;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent;z-index:2}
+.hotspot:focus-visible{outline:2px solid #fff2b3;outline-offset:2px;border-radius:12px}
+.my{left:8.8%;top:68.1%;width:35.3%;height:6.5%}
+.sg{left:54.5%;top:68.1%;width:36%;height:6.5%}
+/* Redesigned standalone black-and-gold music controller. */
+.player{
+ position:absolute;left:8.2%;top:86.5%;width:83.6%;height:8.4%;z-index:4;
+ display:flex;align-items:center;justify-content:space-between;gap:4%;
+ padding:0 7%;border:2px solid #e8b84c;border-radius:999px;
+ background:linear-gradient(180deg,rgba(34,24,10,.98),rgba(3,3,3,.99) 55%,rgba(24,15,5,.98));
+ box-shadow:0 0 10px #f4bd4c88,inset 0 0 10px #d99b2b55;
+}
+.music-mark{color:#ffd76b;font:clamp(20px,5vw,36px)/1 Georgia,serif;text-shadow:0 0 9px #ffbf36;flex:0 0 auto}
+.play{
+ pointer-events:auto;flex:0 0 auto;width:17%;height:66%;max-width:58px;
+ border-radius:50%;display:grid;place-items:center;
+ background:radial-gradient(circle at 35% 28%,#6b4b14,#090705 72%);
+ border:2px solid #f0c45c;box-shadow:0 0 10px #e9b94e99,inset 0 0 7px #f6d77c55;
+ color:#ffe6a1;font:bold clamp(15px,3.4vw,25px)/1 Arial,sans-serif;
+}
+.play:active{transform:scale(.94)}
+.play .pause-icon{letter-spacing:2px;font-size:clamp(15px,3.4vw,24px)}
+.play .play-icon{font-size:clamp(14px,3vw,21px);margin-left:3px}
+.volume-wrap{display:flex;align-items:center;gap:7%;flex:1;min-width:0}
+.volume-mark{color:#ffe2a0;font:clamp(15px,3.4vw,25px)/1 Arial,sans-serif;flex:0 0 auto}
+.volume{
+ pointer-events:auto;display:block;flex:1;min-width:0;width:100%;height:28px;margin:0;
+ cursor:pointer;touch-action:pan-x;z-index:7;-webkit-appearance:none;appearance:none;
+ background:transparent;outline:none;
+}
+.volume::-webkit-slider-runnable-track{height:4px;border-radius:5px;background:linear-gradient(90deg,#ffe18a,#d99722);box-shadow:0 0 5px #ffc43d88}
+.volume::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;
+ margin-top:-6px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff4bf,#ffc43d 62%,#b87512);
+ border:1px solid #fff0ad;box-shadow:0 0 7px #ffc43d,0 0 13px #ffb21c88}
+.volume::-moz-range-track{height:4px;border-radius:5px;background:linear-gradient(90deg,#ffe18a,#d99722);box-shadow:0 0 5px #ffc43d88}
+.volume::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#ffc43d;border:1px solid #fff0ad;box-shadow:0 0 7px #ffc43d}
+.status{position:absolute;left:50%;top:102%;transform:translateX(-50%);color:#f8d77d;font:12px Arial,sans-serif;text-shadow:0 1px 4px #000;white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none}
+.status.show{opacity:0}
+@media (max-height:520px){.poster{width:auto;height:100dvh;max-width:100vw}}
+</style>
+</head>
+<body>
+<main class="poster" aria-label="TPOWER region selection">
+<img class="art" src="region-background.png" alt="Select your region：Malaysia 与 Singapore 登录地区选择界面">
+<a class="hotspot my" href="https://tinyurl.com/tpowernew" aria-label="Malaysia Login"></a>
+<a class="hotspot sg" href="https://tinyurl.com/tpowersg" aria-label="Singapore Login"></a>
+<div class="player" aria-label="音乐控制器">
+ <span class="music-mark" aria-hidden="true">♫</span>
+ <button class="play" id="play" type="button" aria-label="播放音乐"><span class="play-icon" id="playIcon">▶</span></button>
+ <div class="volume-wrap">
+  <span class="volume-mark" aria-hidden="true">🔊</span>
+  <input class="volume" id="volume" type="range" min="0" max="1" step="0.01" value="0.75" aria-label="调整音乐音量">
+ </div>
+ <div class="status" id="status" role="status">请点击中间按钮播放音乐</div>
+</div>
+<audio id="audio" src="TPOWER.mp3" preload="auto" loop playsinline></audio>
+</main>
+<script>
+const audio=document.getElementById('audio');
+const play=document.getElementById('play');
+const playIcon=document.getElementById('playIcon');
+const volume=document.getElementById('volume');
+const status=document.getElementById('status');
+audio.volume=Number(volume.value);
+function sync(){const on=!audio.paused;playIcon.textContent=on?'Ⅱ':'▶';playIcon.className=on?'pause-icon':'play-icon';play.setAttribute('aria-label',on?'暂停音乐':'播放音乐')}
+play.addEventListener('click',async()=>{if(audio.paused){try{await audio.play();status.classList.remove('show')}catch(e){status.textContent='播放失败，请检查音乐文件后再试';status.classList.add('show')}}else{audio.pause()}sync()});
+volume.addEventListener('input',()=>{audio.volume=Number(volume.value)});
+audio.addEventListener('play',sync);audio.addEventListener('playing',sync);audio.addEventListener('pause',sync);audio.addEventListener('ended',sync);window.addEventListener('load',async()=>{try{await audio.play();status.classList.remove('show')}catch(e){status.classList.add('show')}sync()});
+</script>
+</body>
+</html>
