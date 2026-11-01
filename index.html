@@ -1,50 +1,77 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#080604">
-<title>Choose Your Login Region</title>
+<meta name="theme-color" content="#050505">
+<title>Select Your Region</title>
 <style>
+:root{color-scheme:dark;--gold:#f6c85c;--deep:#090705}
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:#080604;font-family:Arial,sans-serif}
-body{min-height:100svh;display:grid;place-items:center;overflow:hidden}
-.stage{position:relative;width:min(100vw,150svh);aspect-ratio:3/2;max-height:100svh}
-.art{display:block;width:100%;height:100%;object-fit:contain}
-.hit{position:absolute;display:block;border:0;background:transparent;cursor:pointer;border-radius:12px}
-.hit:focus-visible{outline:3px solid #fff;outline-offset:2px}
-.malaysia{left:22.5%;top:47%;width:28%;height:28%}
-.singapore{left:51.5%;top:47%;width:28%;height:28%}
-.close{left:74%;top:17%;width:6.5%;height:10%;border-radius:50%}
-.dismiss{position:fixed;inset:0;z-index:5;background:rgba(0,0,0,.94);color:#f3d58b;display:none;place-items:center;text-align:center;padding:24px}
-.dismiss.show{display:grid}
-.reopen{margin-top:14px;border:1px solid #d9b66b;border-radius:9px;background:#17110a;color:#f3d58b;padding:12px 20px;font-weight:bold}
-@media (max-aspect-ratio: 3/2){
-  .stage{width:100vw;max-height:none;height:auto}
-}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#030303;font-family:Arial,"Noto Sans SC",sans-serif}
+.stage{position:relative;width:100vw;height:100vh;height:100dvh;overflow:hidden;background:#030303}
+.art{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;user-select:none;-webkit-user-drag:none}
+/* The flag plates are overlaid with accurate vector flags; both occupy the same plate dimensions. */
+.flagplate{position:absolute;top:47.3%;width:33.8%;height:11.55%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:3.2%;filter:drop-shadow(0 3px 7px #000);pointer-events:none}
+.flagplate.my{left:10.9%}.flagplate.sg{left:58.6%}
+.flagplate svg{width:100%;height:100%;display:block}
+.region-link{position:absolute;top:63.2%;height:6.2%;width:35.8%;border-radius:28px;display:block;z-index:3;text-decoration:none;outline:none;-webkit-tap-highlight-color:transparent}
+.region-link.my{left:9.4%}.region-link.sg{left:55.7%}
+.region-link:focus-visible{outline:3px solid #fff2b3;outline-offset:4px}
+.region-link:active{background:rgba(255,225,130,.14)}
+.player{position:absolute;left:8.3%;top:79.4%;width:83.4%;height:9.5%;display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,24px);z-index:4;color:#ffe18a}
+.play{width:clamp(44px,7vw,68px);height:clamp(44px,7vw,68px);border-radius:50%;border:1px solid rgba(255,220,130,.8);background:rgba(10,7,3,.78);color:#ffe7a5;font-size:clamp(18px,3vw,28px);font-weight:800;box-shadow:0 0 14px rgba(255,190,55,.4);cursor:pointer;flex:none}
+.play:focus-visible,.volume:focus-visible{outline:2px solid white;outline-offset:3px}
+.note{font-size:clamp(20px,4vw,34px);text-shadow:0 0 12px #ffc34c;flex:none}
+.wave{height:35%;width:27%;display:flex;align-items:center;justify-content:center;gap:2px;opacity:.9;overflow:hidden}
+.wave i{display:block;width:2px;max-height:100%;height:var(--h);background:linear-gradient(#fff2a6,#e7a91e);border-radius:3px;box-shadow:0 0 5px #ffca48}
+.wave.playing i{animation:pulse .75s ease-in-out infinite alternate;animation-delay:var(--d)}
+@keyframes pulse{from{transform:scaleY(.35)}to{transform:scaleY(1)}}
+.volicon{font-size:clamp(17px,3vw,25px);flex:none}.volume{width:19%;max-width:125px;accent-color:#f6c34e;height:5px;cursor:pointer}
+.status{position:absolute;left:50%;top:90%;transform:translateX(-50%);font-size:10px;color:#e8c878;opacity:0;transition:opacity .2s;white-space:nowrap;z-index:5;text-shadow:0 1px 3px #000}
+.status.show{opacity:1}
+@media (min-width:700px){.stage{width:min(100vw,66.6667vh);height:min(100vh,150vw);height:min(100dvh,150vw);margin:auto}.art{object-fit:fill}body{display:grid;place-items:center;background:radial-gradient(ellipse,#17100a,#000 70%)}}
+@media (max-height:560px) and (orientation:landscape){.stage{width:100vw;height:100dvh}.player{top:79%;height:10%}.flagplate{top:47%;height:11%}}
+@media(prefers-reduced-motion:reduce){.wave.playing i{animation:none}}
 </style>
 </head>
 <body>
-<main class="stage" id="stage" aria-label="Choose your login region">
-  <img class="art" src="casino-region-popup.png" alt="Casino-themed region selection: Malaysia Login or Singapore Login">
-  <a class="hit malaysia" href="https://tinyurl.com/tpowernew" aria-label="Malaysia Login"></a>
-  <a class="hit singapore" href="https://tinyurl.com/tpowersg" aria-label="Singapore Login"></a>
-  <button class="hit close" id="close" type="button" aria-label="Close region selection"></button>
-</main>
-<div class="dismiss" id="dismiss">
-  <div>
-    <div>REGION SELECTION CLOSED</div>
-    <button class="reopen" id="reopen" type="button">OPEN LOGIN OPTIONS</button>
-  </div>
+<main class="stage" aria-label="Select your login region">
+<img class="art" src="region-background.png" alt="夜景背景：吉隆坡双子塔与新加坡滨海湾地标，黑金地区选择界面">
+<!-- Malaysia flag: official 14-point star, crescent, 14 alternating stripes -->
+<div class="flagplate my" aria-label="Malaysia flag">
+<svg viewBox="0 0 280 140" role="img" aria-label="Flag of Malaysia" xmlns="http://www.w3.org/2000/svg">
+<defs><clipPath id="mclip"><rect width="280" height="140" rx="8"/></clipPath></defs>
+<g clip-path="url(#mclip)"><rect width="280" height="140" fill="#fff"/><g fill="#cc0000"> <path d="M0 0h280v10H0zM0 20h280v10H0zM0 40h280v10H0zM0 60h280v10H0zM0 80h280v10H0zM0 100h280v10H0zM0 120h280v10H0z"/></g><rect width="140" height="70" fill="#010066"/><circle cx="48" cy="35" r="25" fill="#ffcc00"/><circle cx="56" cy="29" r="21" fill="#010066"/><polygon fill="#ffcc00" points="101,7 106,26 123,15 113,32 134,35 114,40 126,57 107,47 101,67 95,47 76,57 88,40 68,35 89,32 79,15 96,26"/></g><rect x="1" y="1" width="278" height="138" rx="8" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2"/>
+</svg></div>
+<!-- Singapore flag: crescent and five stars; same outer plate size, flag artwork preserves its 3:2 ratio inside -->
+<div class="flagplate sg" aria-label="Singapore flag">
+<svg viewBox="0 0 280 140" role="img" aria-label="Flag of Singapore" xmlns="http://www.w3.org/2000/svg">
+<defs><clipPath id="sclip"><rect width="280" height="140" rx="8"/></clipPath></defs>
+<g clip-path="url(#sclip)"><rect width="280" height="70" fill="#ed2939"/><rect y="70" width="280" height="70" fill="#fff"/><circle cx="57" cy="35" r="23" fill="#fff"/><circle cx="65" cy="29" r="19" fill="#ed2939"/>
+<g fill="#fff"><polygon points="96,12 99,20 108,20 101,25 104,34 96,29 89,34 92,25 85,20 94,20"/><polygon points="119,25 122,33 131,33 124,38 127,47 119,42 112,47 115,38 108,33 117,33"/><polygon points="110,49 113,57 122,57 115,62 118,71 110,66 103,71 106,62 99,57 108,57"/><polygon points="82,49 85,57 94,57 87,62 90,71 82,66 75,71 78,62 71,57 80,57"/><polygon points="73,25 76,33 85,33 78,38 81,47 73,42 66,47 69,38 62,33 71,33"/></g></g><rect x="1" y="1" width="278" height="138" rx="8" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2"/>
+</svg></div>
+<a class="region-link my" href="https://tinyurl.com/tpowernew" aria-label="Malaysia login"></a>
+<a class="region-link sg" href="https://tinyurl.com/tpowersg" aria-label="Singapore login"></a>
+<div class="player" aria-label="Music controls">
+<span class="note" aria-hidden="true">♫</span>
+<div class="wave" id="wave" aria-hidden="true"></div>
+<button class="play" id="play" type="button" aria-label="Play music">▶</button>
+<span class="volicon" aria-hidden="true">◖))</span>
+<input class="volume" id="volume" type="range" min="0" max="1" step="0.01" value="0.75" aria-label="Volume">
 </div>
+<div class="status" id="status" role="status">点击播放音乐</div>
+<audio id="audio" src="TPOWER.mp3" preload="auto" loop playsinline></audio>
+</main>
 <script>
-const dismiss=document.getElementById('dismiss');
-document.getElementById('close').addEventListener('click',()=>dismiss.classList.add('show'));
-document.getElementById('reopen').addEventListener('click',()=>dismiss.classList.remove('show'));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')dismiss.classList.add('show')});
-document.addEventListener('click',e=>{
-  if(dismiss.classList.contains('show') && e.target===dismiss) dismiss.classList.remove('show');
-});
+const audio=document.getElementById('audio'), play=document.getElementById('play'), volume=document.getElementById('volume'), wave=document.getElementById('wave'), status=document.getElementById('status');
+for(let i=0;i<29;i++){const bar=document.createElement('i');bar.style.setProperty('--h',(18+Math.abs(Math.sin(i*.73))*78)+'%');bar.style.setProperty('--d',(-i*.035)+'s');wave.appendChild(bar)}
+audio.volume=Number(volume.value);
+function setPlaying(on){play.textContent=on?'Ⅱ':'▶';play.setAttribute('aria-label',on?'Pause music':'Play music');wave.classList.toggle('playing',on)}
+play.addEventListener('click',async()=>{if(audio.paused){try{await audio.play();setPlaying(true);status.classList.remove('show')}catch(e){status.textContent='无法播放，请检查音频文件';status.classList.add('show')}}else{audio.pause();setPlaying(false)}});
+volume.addEventListener('input',()=>{audio.volume=Number(volume.value)});
+audio.addEventListener('play',()=>setPlaying(true));audio.addEventListener('pause',()=>setPlaying(false));
+// Attempt autoplay; browsers such as iOS Safari may require a user gesture.
+window.addEventListener('load',async()=>{try{await audio.play();setPlaying(true)}catch(e){setPlaying(false);status.classList.add('show')}});
 </script>
-</body>
-</html>
+</body></html>
