@@ -10,9 +10,16 @@
 html,body{margin:0;min-height:100%;background:#030303}
 body{display:flex;justify-content:center;align-items:flex-start;overflow-x:hidden}
 .poster{position:relative;width:min(100vw,75dvh,680px);aspect-ratio:3/4;overflow:hidden;background:#050505;isolation:isolate}
-.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;display:block;pointer-events:none;user-select:none}
-.region-link{position:absolute;z-index:2;display:block;text-decoration:none;background:transparent;border:0;outline-offset:3px;-webkit-tap-highlight-color:transparent}
-/* Transparent hit areas align with the two gold buttons drawn in the background artwork. */
+.poster-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;display:block;pointer-events:none;user-select:none}
+.video-frame{
+  position:absolute;z-index:2;left:6.4%;top:16.2%;width:62.2%;height:28.4%;
+  padding:4px;border:3px solid #f7bd4d;border-radius:18px;
+  background:linear-gradient(145deg,#fff0a5 0%,#c77b16 24%,#ffdf75 48%,#8b4b08 72%,#ffe39a 100%);
+  box-shadow:0 0 9px #ffbf45,0 0 22px #e99a24aa,inset 0 0 7px #fff2b0;
+  overflow:hidden;
+}
+.video-frame video{display:block;width:100%;height:100%;object-fit:contain;background:#050505;border-radius:10px}
+.region-link{position:absolute;z-index:3;display:block;text-decoration:none;background:transparent;border:0;outline-offset:3px;-webkit-tap-highlight-color:transparent}
 .region-link.malaysia{left:10.4%;top:71.7%;width:33.5%;height:5.5%}
 .region-link.singapore{left:53.5%;top:71.7%;width:33.5%;height:5.5%}
 .region-link:focus-visible{outline:2px solid #ffe09a;border-radius:999px}
@@ -21,7 +28,12 @@ body{display:flex;justify-content:center;align-items:flex-start;overflow-x:hidde
 </head>
 <body>
 <main class="poster" aria-label="选择您的地区登录">
-  <img src="background.png" alt="黑金主题地区选择画面，包含马来西亚与新加坡国旗和城市夜景">
+  <img class="poster-bg" src="background.png" alt="黑金主题地区选择画面，包含马来西亚与新加坡国旗和城市夜景">
+  <div class="video-frame">
+    <video src="TPower-theme.mp4" controls autoplay muted playsinline preload="metadata">
+      您的浏览器不支持 HTML5 视频。
+    </video>
+  </div>
   <a class="region-link malaysia" href="https://tinyurl.com/tpowernew" aria-label="Malaysia region login" title="Malaysia"></a>
   <a class="region-link singapore" href="https://tinyurl.com/tpowersg" aria-label="Singapore region login" title="Singapore"></a>
 </main>
