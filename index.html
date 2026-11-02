@@ -3,81 +3,66 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#050505">
+<meta name="theme-color" content="#160500">
 <title>TPOWER — Select Your Region</title>
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;min-height:100%;background:#030303}
+html,body{margin:0;width:100%;height:100%;background:#090302}
 body{display:flex;justify-content:center;align-items:stretch;overflow:hidden}
-.poster{position:relative;width:100vw;height:100vh;height:100dvh;min-height:100svh;overflow:hidden;background:#050505;isolation:isolate}
+.poster{position:relative;width:100vw;height:100vh;height:100dvh;min-height:100svh;overflow:hidden;background:#090302;isolation:isolate}
 .poster-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;display:block;pointer-events:none;user-select:none}
-.girl-foreground{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;z-index:10;pointer-events:none;user-select:none}
 .video-frame{
-  position:absolute;z-index:1;left:2.5%;top:18.0%;width:70.0%;height:25.0%;
-  padding:4px;border:3px solid #f7bd4d;border-radius:17px;
-  background:linear-gradient(145deg,#fff0a5 0%,#c77b16 24%,#ffdf75 48%,#8b4b08 72%,#ffe39a 100%);
-  box-shadow:0 0 9px #ffbf45,0 0 22px #e99a24aa,inset 0 0 7px #fff2b0;
-  overflow:hidden;
+ position:absolute;z-index:2;left:3.2%;top:23.5%;width:49.5%;height:18.2%;
+ padding:4px;border:3px solid #f7bd4d;border-radius:16px;
+ background:linear-gradient(145deg,#fff0a5 0%,#c77b16 24%,#ffdf75 48%,#8b4b08 72%,#ffe39a 100%);
+ box-shadow:0 0 9px #ffbf45,0 0 22px #e99a24aa,inset 0 0 7px #fff2b0;
+ overflow:hidden
 }
-.video-frame video{display:block;width:100%;height:100%;object-fit:contain;background:#050505;border-radius:10px}
+.video-frame video{display:block;width:100%;height:100%;object-fit:cover;background:#160500;border-radius:10px}
 .sound-start{
-  position:absolute;z-index:5;left:50%;top:50%;transform:translate(-50%,-50%);
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  min-width:82%;padding:10px 12px;border:1px solid #ffe49a;border-radius:999px;
-  color:#211506;font:700 13px/1.2 system-ui,-apple-system,sans-serif;letter-spacing:.3px;
-  background:linear-gradient(135deg,#fff0ad 0%,#e6b64f 42%,#b87920 100%);
-  box-shadow:0 0 12px #ffcf62cc,0 4px 14px #0009;cursor:pointer;
-  -webkit-tap-highlight-color:transparent
+ position:absolute;z-index:5;left:50%;top:50%;transform:translate(-50%,-50%);
+ display:flex;align-items:center;justify-content:center;gap:8px;
+ min-width:82%;padding:10px 12px;border:1px solid #ffe49a;border-radius:999px;
+ color:#211506;font:700 13px/1.2 system-ui,-apple-system,sans-serif;letter-spacing:.3px;
+ background:linear-gradient(135deg,#fff0ad 0%,#e6b64f 42%,#b87920 100%);
+ box-shadow:0 0 12px #ffcf62cc,0 4px 14px #0009;cursor:pointer;-webkit-tap-highlight-color:transparent
 }
 .sound-start[hidden]{display:none}
 .sound-start:active{transform:translate(-50%,-50%) scale(.97)}
 .sound-start svg{width:18px;height:18px;flex:none}
 .sound-label{display:flex;flex-direction:column;align-items:flex-start;gap:2px;white-space:nowrap}
-.sound-cn{font-size:13px;line-height:1.2}
-.sound-en{font-size:9px;line-height:1.2;letter-spacing:.6px;font-weight:700}
-.region-link{position:absolute;z-index:3;display:block;text-decoration:none;background:transparent;border:0;outline-offset:3px;-webkit-tap-highlight-color:transparent}
-.region-link.malaysia{left:10.2%;top:72.3%;width:34.4%;height:4.3%}
-.region-link.singapore{left:55.1%;top:72.3%;width:34.4%;height:4.3%}
+.sound-cn{font-size:13px;line-height:1.2}.sound-en{font-size:9px;line-height:1.2;letter-spacing:.6px;font-weight:700}
+.region-link{position:absolute;z-index:4;display:block;text-decoration:none;background:transparent;border:0;outline-offset:3px;-webkit-tap-highlight-color:transparent}
+.region-link.malaysia{left:9.3%;top:75.1%;width:39.0%;height:4.1%}
+.region-link.singapore{left:58.0%;top:75.1%;width:39.0%;height:4.1%}
 .region-link:focus-visible{outline:2px solid #ffe09a;border-radius:999px}
-@media(max-width:360px){.video-frame{left:2.0%;top:18.0%;width:71.0%;height:25.0%;}.sound-start{gap:5px;padding:8px 7px}.sound-cn{font-size:11px}.sound-en{font-size:8px}}
+@media(max-width:380px){.video-frame{left:3%;width:49.5%;}.sound-start{gap:5px;padding:8px 7px}.sound-cn{font-size:11px}.sound-en{font-size:8px}}
 @media(min-width:900px){.poster{width:min(56.25dvh,680px);height:100dvh;min-height:100svh}}
 </style>
 </head>
 <body>
 <main class="poster" aria-label="选择您的地区登录">
-  <img class="poster-bg" src="background.png" alt="黑金主题地区选择画面，包含马来西亚与新加坡国旗和城市夜景">
-  <div class="video-frame">
-    <video id="themeVideo" src="TPower-theme.mp4" controls autoplay muted playsinline preload="metadata">
-      您的浏览器不支持 HTML5 视频。
-    </video>
-    <button class="sound-start" id="soundStart" type="button" aria-label="点击开启音乐 / Tap to enable music">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
-      <span class="sound-label"><span class="sound-cn">点击开启音乐</span><span class="sound-en">TAP TO ENABLE MUSIC</span></span>
-    </button>
-  </div>
-  <img class="girl-foreground" src="girl-foreground.png" alt="" aria-hidden="true">
-  <a class="region-link malaysia" href="https://tinyurl.com/tpowernew" aria-label="Malaysia region login" title="Malaysia"></a>
-  <a class="region-link singapore" href="https://tinyurl.com/tpowersg" aria-label="Singapore region login" title="Singapore"></a>
+ <img class="poster-bg" src="background.png" alt="东方宫廷风格 TPOWER 地区登录画面">
+ <div class="video-frame">
+  <video id="themeVideo" src="TPower-theme.mp4" controls autoplay muted playsinline preload="metadata">您的浏览器不支持 HTML5 视频。</video>
+  <button class="sound-start" id="soundStart" type="button" aria-label="点击开启音乐 / Tap to enable music">
+   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
+   <span class="sound-label"><span class="sound-cn">点击开启音乐</span><span class="sound-en">TAP TO ENABLE MUSIC</span></span>
+  </button>
+ </div>
+ <a class="region-link malaysia" href="https://tinyurl.com/tpowernew" aria-label="Malaysia region login" title="Malaysia"></a>
+ <a class="region-link singapore" href="https://tinyurl.com/tpowersg" aria-label="Singapore region login" title="Singapore"></a>
 </main>
 <script>
-(() => {
-  const video = document.getElementById('themeVideo');
-  const soundButton = document.getElementById('soundStart');
-  if (!video || !soundButton) return;
-  const hideSoundButton = () => { soundButton.hidden = true; };
-  soundButton.addEventListener('click', async () => {
-    video.muted = false;
-    video.volume = 1;
-    try {
-      await video.play();
-      hideSoundButton();
-    } catch (error) {
-      video.muted = true;
-    }
-  });
-  video.addEventListener('volumechange', () => {
-    if (!video.muted && video.volume > 0) hideSoundButton();
-  });
+(()=>{
+ const video=document.getElementById('themeVideo');
+ const button=document.getElementById('soundStart');
+ const hide=()=>{button.hidden=true};
+ button.addEventListener('click',async()=>{
+  video.muted=false;video.volume=1;
+  try{await video.play();hide()}catch(e){video.muted=true}
+ });
+ video.addEventListener('volumechange',()=>{if(!video.muted&&video.volume>0)hide()});
 })();
 </script>
 </body>
