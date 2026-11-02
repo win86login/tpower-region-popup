@@ -22,7 +22,7 @@ body{display:flex;justify-content:center;align-items:flex-start;overflow-x:hidde
 .sound-start{
   position:absolute;z-index:5;left:50%;top:50%;transform:translate(-50%,-50%);
   display:flex;align-items:center;justify-content:center;gap:9px;
-  min-width:170px;padding:13px 20px;border:1px solid #ffe49a;border-radius:999px;
+  min-width:190px;padding:11px 20px;border:1px solid #ffe49a;border-radius:999px;
   color:#211506;font:700 14px/1.2 system-ui,-apple-system,sans-serif;letter-spacing:.4px;
   background:linear-gradient(135deg,#fff0ad 0%,#e6b64f 42%,#b87920 100%);
   box-shadow:0 0 12px #ffcf62cc,0 4px 14px #0009;cursor:pointer;
@@ -31,7 +31,10 @@ body{display:flex;justify-content:center;align-items:flex-start;overflow-x:hidde
 .sound-start[hidden]{display:none}
 .sound-start:active{transform:translate(-50%,-50%) scale(.97)}
 .sound-start svg{width:19px;height:19px;flex:none}
-@media(max-width:420px){.sound-start{min-width:145px;padding:11px 15px;font-size:12px}}
+.sound-start .sound-label{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+.sound-start .sound-cn{font-size:14px;line-height:1.2}
+.sound-start .sound-en{font-size:10px;line-height:1.2;letter-spacing:.8px;font-weight:700}
+@media(max-width:420px){.sound-start{min-width:175px;padding:10px 15px}.sound-start .sound-cn{font-size:13px}.sound-start .sound-en{font-size:9px}}
 .region-link{position:absolute;z-index:3;display:block;text-decoration:none;background:transparent;border:0;outline-offset:3px;-webkit-tap-highlight-color:transparent}
 .region-link.malaysia{left:10.4%;top:71.7%;width:33.5%;height:5.5%}
 .region-link.singapore{left:53.5%;top:71.7%;width:33.5%;height:5.5%}
@@ -46,9 +49,9 @@ body{display:flex;justify-content:center;align-items:flex-start;overflow-x:hidde
     <video id="themeVideo" src="TPower-theme.mp4" controls autoplay muted playsinline preload="metadata">
       您的浏览器不支持 HTML5 视频。
     </video>
-    <button class="sound-start" id="soundStart" type="button" aria-label="点击开启音乐">
+    <button class="sound-start" id="soundStart" type="button" aria-label="点击开启音乐 / Tap to enable music">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
-      点击开启音乐
+      <span class="sound-label"><span class="sound-cn">点击开启音乐</span><span class="sound-en">TAP TO ENABLE MUSIC</span></span>
     </button>
   </div>
   <a class="region-link malaysia" href="https://tinyurl.com/tpowernew" aria-label="Malaysia region login" title="Malaysia"></a>
